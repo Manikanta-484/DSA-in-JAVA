@@ -94,6 +94,27 @@ class circulardoublylinkedlist {
             head.prev = secondLastTail;
         }
     }
+
+    void deleteDuplicates() {
+        if (head == null || head.next == head) {
+            return; // No duplicates in an empty list or list with only one node
+        }
+        
+        HashSet<Integer> set = new HashSet<>();
+        Node current = head;
+
+        do {
+            if (set.contains(current.data)) {
+                Node prevNode = current.prev;
+                Node nextNode = current.next;
+                prevNode.next = nextNode;
+                nextNode.prev = prevNode;
+            } else {
+                set.add(current.data);
+            }
+            current = current.next;
+        } while (current != head);
+    }
 }
 
 public class Main {
