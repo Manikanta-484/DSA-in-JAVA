@@ -197,4 +197,28 @@ class linkedlist{
         head=newhead;
     }
 
+    // method to remove a node at the given index eg 1->2->3->4->5  if void remove(2);   result list will be  1->3->4->5
+    public void remove(int index) {
+        if (index < 0) {
+            return;
+        }
+        if (index == 0) {
+            head = head.next;
+            return;
+        }
+
+        node current = head;
+        node prev = null;
+        int i = 0;
+        while (current != null && i < index) {
+            prev = current;// this will point the prev node 
+            current = current.next;  // this will point the node that should be deleted
+            i++;
+        }
+        if (current != null) {
+            prev.next = current.next;
+        }
+    }
+
+
 }
