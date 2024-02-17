@@ -144,5 +144,57 @@ class linkedlist{
         }
     }
 
+    //getlastnode method to find the last node of the list 
+    node getlastnode(){
+        if(head==null){
+            return null;
+        }
+        node current =head;
+        while (current.next!=null){
+            current=current.next;
+        }
+        return current;
+    }
+
+    // to find the size of the list 
+    int size(){
+        int size=0;
+        node current=head;
+        while (current!=null){
+            size++;
+            current=current.next;
+        }
+        return size;
+    }
+
+    // to rotate the list by given number
+    /* Singly Linked List - Rotate
+       Implement the following on the SinglyLinkedList class:
+          Rotate
+       This function should rotate all the nodes in the list by some 
+       number passed in. For instance, if your list looks like
+       1 -> 2 -> 3 -> 4 -> 5 and you rotate by 2,
+       the list should be modified to 3 -> 4 -> 5 -> 1 -> 2. 
+       The number passed in  to rotate can be any integer.
+        Time Complexity : O(N), where N is the length of the list.
+        Space Complexity : O(1)   */
+    public void rotate(int num){
+        if(head==null || num<=0){
+            return;
+        }
+        int rotation =num%size();
+        if(rotation==0){
+            return;
+        }
+        node tail=getlastnode();
+        node newtail=head;
+        for(int i=1;i<rotation;i++){
+            newtail=newtail.next;
+        }
+        node newhead =newtail.next;
+        tail.next=head;
+        newtail.next=null;
+        head=newhead;
+    }
 
 }
