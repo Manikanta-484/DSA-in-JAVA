@@ -52,11 +52,19 @@ public class Trie {
         TrieNode currntnode=parentnode.children.get(ch);
         boolean canThisBeDeleted;
         //case 1: prefix is same as other word
+        //If currntnode has more than one child, it means that the current character is part of multiple words.
+        //Recursively call delete on the child node (currntnode) for the next character in the word (index + 1).
+       //Return false because we cannot delete the current node as it is part of another word.
         if(currntnode.children.size()>1){
             delete(currntnode,word,index+1);
             return false;
         }
         //case 2: we are at the last word,but it is prefix of another word
+        //If index is the last character of the word, we check if currntnode has any children.
+        //  If currntnode has one or more children, it means the current word is a prefix of another word.
+                 //  We just unset the endofstring flag and return false.
+        //If currntnode has no children, it means this node is not shared with any other word, and\
+           //we can remove it from the parentnode's children map and return true.
         if(index==word.length()-1){
             if(currntnode.children.size()>=1){
                 currntnode.endofstring=false;
@@ -67,10 +75,14 @@ public class Trie {
             }
         }
         //case 3: some other word is a prefix of this word
+       // If the current node marks the end of another word, it means some other word is a prefix of the current word.
+       // Recursively call delete on the child node (currntnode) for the next character in the word (index + 1).
+       // Return false because we cannot delete the current node as it is part of another word.
         if(currntnode.endofstring==true){
             delete(currntnode,word,index+1);
             return false;
         }
+        //Recursive Deletion and Cleanup:
         canThisBeDeleted=delete(currntnode,word,index+1);
         if(canThisBeDeleted==true){
             parentnode.children.remove(ch);
